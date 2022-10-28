@@ -12,7 +12,11 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-JFQP7ObvOom3Ta6gonOJfEAHNSTZUi5kP5H+uTluktU=";
   };
 
-  buildInputs = [
+  patches = [
+    ./patches/001-install-dirs.patch
+  ];
+
+  propagatedBuildInputs = [
     cmake
   ];
 
@@ -26,5 +30,4 @@ stdenv.mkDerivation rec {
     mainProgram = "ecbuild";
     platforms = platforms.all;
   };
-
 }

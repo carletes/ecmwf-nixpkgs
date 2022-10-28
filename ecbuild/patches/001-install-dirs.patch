@@ -1,0 +1,59 @@
+Fix installation directories for Nix.
+
+Adapted from https://github.com/ecmwf/ecbuild/issues/40
+
+This patch assumes that:
+* ecbuild's `INSTALL_*_DIR` are abosulte, and rooted on `CMAKE_INSTALL_PREFIX`.
+
+--- a/cmake/ecbuild_config.h.in
++++ b/cmake/ecbuild_config.h.in
+@@ -50,9 +50,9 @@
+ /* Needed for finding per package config files */
+ 
+ #define @PNAME@_INSTALL_DIR       "@CMAKE_INSTALL_PREFIX@"
+-#define @PNAME@_INSTALL_BIN_DIR   "@CMAKE_INSTALL_PREFIX@/@INSTALL_BIN_DIR@"
+-#define @PNAME@_INSTALL_LIB_DIR   "@CMAKE_INSTALL_PREFIX@/@INSTALL_LIB_DIR@"
+-#define @PNAME@_INSTALL_DATA_DIR  "@CMAKE_INSTALL_PREFIX@/@INSTALL_DATA_DIR@"
++#define @PNAME@_INSTALL_BIN_DIR   "@INSTALL_BIN_DIR@"
++#define @PNAME@_INSTALL_LIB_DIR   "@INSTALL_LIB_DIR@"
++#define @PNAME@_INSTALL_DATA_DIR  "@INSTALL_DATA_DIR@"
+ 
+ #define @PNAME@_DEVELOPER_SRC_DIR "@CMAKE_SOURCE_DIR@"
+ #define @PNAME@_DEVELOPER_BIN_DIR "@CMAKE_BINARY_DIR@"
+--- a/cmake/ecbuild_install_project.cmake
++++ b/cmake/ecbuild_install_project.cmake
+@@ -348,12 +348,12 @@ macro( ecbuild_install_project )
+ 
+     endif()
+ 
+-    # Some libraries install no headers, and a ${CMAKE_INSTALL_PREFIX}/${INSTALL_INCLUDE_DIR}
++    # Some libraries install no headers, and a ${INSTALL_INCLUDE_DIR}
+     # may not have been created, although it is added to each library's public interface.
+     # We therefore need to create the include directory regardless to avoid errors in downstream
+     # libraries referencing this include directory. ( see ECBUILD-437 )
+     if( ECBUILD_INSTALL_LIBRARY_HEADERS )
+-        install(CODE "file( MAKE_DIRECTORY \"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${INSTALL_INCLUDE_DIR}\")" )
++        install(CODE "file( MAKE_DIRECTORY \"\$ENV{DESTDIR}\${INSTALL_INCLUDE_DIR}\")" )
+     endif()
+ 
+ endmacro( ecbuild_install_project )
+--- a/cmake/pkg-config.pc.in
++++ b/cmake/pkg-config.pc.in
+@@ -3,12 +3,12 @@
+ 
+ git_tag=@PKGCONFIG_GIT_TAG@
+ 
+-prefix=${pcfiledir}/../..
++prefix=@CMAKE_INSTALL_PREFIX@
+ exec_prefix=${prefix}
+-libdir=${prefix}/@INSTALL_LIB_DIR@
+-includedir=${prefix}/@INSTALL_INCLUDE_DIR@
+-bindir=${prefix}/@INSTALL_BIN_DIR@
+-fmoddir=${prefix}/@INSTALL_INCLUDE_DIR@
++libdir=@INSTALL_LIB_DIR@
++includedir=@INSTALL_INCLUDE_DIR@
++bindir=@INSTALL_BIN_DIR@
++fmoddir=@INSTALL_INCLUDE_DIR@
+ 
+ CC=@CMAKE_C_COMPILER@
+ CXX=@CMAKE_CXX_COMPILER@
