@@ -11,6 +11,7 @@
           final: prev: {
             ecbuild = prev.callPackage ./ecbuild/default.nix { pkgs = prev; };
             eccodes = prev.callPackage ./eccodes/default.nix { pkgs = final; };
+            magics = prev.callPackage ./magics/default.nix { pkgs = final; };
           }
         );
     } // (
@@ -22,6 +23,7 @@
           packages = {
             ecbuild = pkgs.ecbuild;
             eccodes = pkgs.eccodes;
+            magics = pkgs.magics;
           };
         }));
 }
