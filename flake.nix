@@ -13,6 +13,7 @@
             eccodes = prev.callPackage ./eccodes/default.nix { pkgs = final; };
             eckit = prev.callPackage ./eckit/default.nix { pkgs = final; };
             magics = prev.callPackage ./magics/default.nix { pkgs = final; };
+            odc = prev.callPackage ./odc/default.nix { pkgs = final; };
           }
         );
     } // (
@@ -26,6 +27,7 @@
             eccodes = pkgs.eccodes;
             eckit = pkgs.eckit;
             magics = pkgs.magics;
+            odc = pkgs.odc;
           };
         }));
 }

@@ -40,7 +40,7 @@ stdenv.mkDerivation rec {
   ++ lib.optionals withGeoTIFF [ libgeotiff.dev libtiff ]
   ++ lib.optional withMetview qt5.full
   ++ lib.optional withNetCDF netcdf
-    # TODO: ODB
+  ++ lib.optional withODB odc
   ;
 
   propagatedBuildInputs = [
