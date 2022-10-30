@@ -30,9 +30,10 @@ stdenv.mkDerivation rec {
   ++ lib.optionals withDoc [ doxygen python3Packages.breathe sphinx python3Packages.sphinx-rtd-theme ]
   ;
 
-  buildInputs = [
+  propagatedBuildInputs = [
     eccodes
     expat
+    ksh
     proj
     zlib
   ]
@@ -42,10 +43,6 @@ stdenv.mkDerivation rec {
   ++ lib.optional withNetCDF netcdf
   ++ lib.optional withODB odc
   ;
-
-  propagatedBuildInputs = [
-    ksh
-  ];
 
   cmakeFlags = [
     "-DENABLE_CAIRO=${if withCairo then "ON" else "OFF"}"

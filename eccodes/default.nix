@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
     perl
   ] ++ lib.optional withFortran gfortran;
 
-  buildInputs = [ ]
+  propagatedBuildInputs = [ ]
     ++ lib.optional withAEC libaec
     ++ lib.optional withJPG openjpeg
     ++ lib.optional withNetCDF netcdf

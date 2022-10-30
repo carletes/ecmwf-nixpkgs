@@ -59,7 +59,7 @@ stdenv.mkDerivation rec {
     pkg-config
   ];
 
-  buildInputs = [
+  propagatedBuildInputs = [
   ]
   ++ lib.optional withAEC libaec
   ++ lib.optional withArmadillo armadillo

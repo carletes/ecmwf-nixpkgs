@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   ++ lib.optional withFortran gfortran
   ;
 
-  buildInputs = [
+  propagatedBuildInputs = [
     eckit
   ];
 
