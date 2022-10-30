@@ -1,32 +1,32 @@
 { pkgs
-, enableAEC ? true
-, enableAIO ? true
-, enableArmadillo ? false
-, enableBuildTools ? true
-, enableBzip2 ? true
-, enableCurl ? true
-, enableEckitCmd ? true
-, enableEigen ? true
-, enableExperimental ? false
-, enableJemalloc ? false
-, enableLZ4 ? true
-, enableOpenMP ? false
-, enableSandbox ? false
-, enableSnappy ? true
-, enableSQL ? true
-, enableSSL ? true
-, enableUnicode ? true
-, enableXxHash ? true
+, withAEC ? true
+, withAIO ? true
+, withArmadillo ? false
+, withBuildTools ? true
+, withBzip2 ? true
+, withCurl ? true
+, withEckitCmd ? true
+, withEigen ? true
+, withExperimental ? false
+, withJemalloc ? false
+, withLZ4 ? true
+, withOpenMP ? false
+, withSandbox ? false
+, withSnappy ? true
+, withSQL ? true
+, withSSL ? true
+, withUnicode ? true
+, withXxHash ? true
 
   # Things I don't know how to handle:
 
-  # , enableCUDA ? false
-  # , enableLAPACK ? true
-  # , enableMKL ? false
-  # , enableMPI ? true
-  # , enableRADOS ? true
-  # , enableRsync ? true
-  # , enableViennaCL ? false
+  # , withCUDA ? false
+  # , withLAPACK ? true
+  # , withMKL ? false
+  # , withMPI ? true
+  # , withRADOS ? true
+  # , withRsync ? true
+  # , withViennaCL ? false
 }:
 
 with pkgs;
@@ -61,41 +61,41 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
   ]
-  ++ lib.optional enableAEC libaec
-  ++ lib.optional enableArmadillo armadillo
-  ++ lib.optional enableBzip2 bzip2.dev
-  ++ lib.optional enableCurl curl
-  ++ lib.optional enableEckitCmd ncurses
-  ++ lib.optional enableEigen eigen
-  ++ lib.optional enableJemalloc jemalloc
-  ++ lib.optional enableLZ4 lz4
-  ++ lib.optional enableSnappy snappy
-  ++ lib.optional enableSSL openssl
-  ++ lib.optional enableXxHash xxHash
+  ++ lib.optional withAEC libaec
+  ++ lib.optional withArmadillo armadillo
+  ++ lib.optional withBzip2 bzip2.dev
+  ++ lib.optional withCurl curl
+  ++ lib.optional withEckitCmd ncurses
+  ++ lib.optional withEigen eigen
+  ++ lib.optional withJemalloc jemalloc
+  ++ lib.optional withLZ4 lz4
+  ++ lib.optional withSnappy snappy
+  ++ lib.optional withSSL openssl
+  ++ lib.optional withXxHash xxHash
   ;
 
   cmakeFlags = [
-    "-DENABLE_AEC=${if enableAEC then "ON" else "OFF"}"
-    "-DENABLE_AIO=${if enableAIO then "ON" else "OFF"}"
-    "-DENABLE_ARMADILLO=${if enableArmadillo then "ON" else "OFF"}"
-    "-DENABLE_BUILD_TOOLS=${if enableBuildTools then "ON" else "OFF"}"
-    "-DENABLE_BZIP2=${if enableBzip2 then "ON" else "OFF"}"
-    "-DENABLE_CURL=${if enableCurl then "ON" else "OFF"}"
-    "-DENABLE_ECKIT_CMD=${if enableEckitCmd then "ON" else "OFF"}"
-    "-DENABLE_ECKIT_SQL=${if enableSQL then "ON" else "OFF"}"
-    "-DENABLE_EIGEN=${if enableEigen then "ON" else "OFF"}"
-    "-DENABLE_EXPERIMENTAL=${if enableExperimental then "ON" else "OFF"}"
-    "-DENABLE_JEMALLOC=${if enableJemalloc then "ON" else "OFF"}"
-    "-DENABLE_LZ4=${if enableLZ4 then "ON" else "OFF"}"
-    "-DENABLE_OMP=${if enableOpenMP then "ON" else "OFF"}"
-    "-DENABLE_SANDBOX=${if enableSandbox then "ON" else "OFF"}"
-    "-DENABLE_SNAPPY=${if enableSnappy then "ON" else "OFF"}"
-    "-DENABLE_SSL=${if enableSSL then "ON" else "OFF"}"
-    "-DENABLE_UNICODE=${if enableUnicode then "ON" else "OFF"}"
-    "-DENABLE_XXHASH=${if enableXxHash then "ON" else "OFF"}"
+    "-DENABLE_AEC=${if withAEC then "ON" else "OFF"}"
+    "-DENABLE_AIO=${if withAIO then "ON" else "OFF"}"
+    "-DENABLE_ARMADILLO=${if withArmadillo then "ON" else "OFF"}"
+    "-DENABLE_BUILD_TOOLS=${if withBuildTools then "ON" else "OFF"}"
+    "-DENABLE_BZIP2=${if withBzip2 then "ON" else "OFF"}"
+    "-DENABLE_CURL=${if withCurl then "ON" else "OFF"}"
+    "-DENABLE_ECKIT_CMD=${if withEckitCmd then "ON" else "OFF"}"
+    "-DENABLE_ECKIT_SQL=${if withSQL then "ON" else "OFF"}"
+    "-DENABLE_EIGEN=${if withEigen then "ON" else "OFF"}"
+    "-DENABLE_EXPERIMENTAL=${if withExperimental then "ON" else "OFF"}"
+    "-DENABLE_JEMALLOC=${if withJemalloc then "ON" else "OFF"}"
+    "-DENABLE_LZ4=${if withLZ4 then "ON" else "OFF"}"
+    "-DENABLE_OMP=${if withOpenMP then "ON" else "OFF"}"
+    "-DENABLE_SANDBOX=${if withSandbox then "ON" else "OFF"}"
+    "-DENABLE_SNAPPY=${if withSnappy then "ON" else "OFF"}"
+    "-DENABLE_SSL=${if withSSL then "ON" else "OFF"}"
+    "-DENABLE_UNICODE=${if withUnicode then "ON" else "OFF"}"
+    "-DENABLE_XXHASH=${if withXxHash then "ON" else "OFF"}"
 
     # Test data needed for the extra tests, which we cannot download while building.
-    # TODO: Find a way of prefetching the data and enable this.
+    # TODO: Find a way of prefetching the data and with this.
     "-DENABLE_EXTRA_TESTS=OFF"
 
     # Things I don't know how to handle.

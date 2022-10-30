@@ -1,13 +1,13 @@
 { pkgs
-, enableAEC ? true
-, enableBUFR ? true
-, enableBuildTools ? true
-, enableExamples ? false
-, enableFortran ? true
-, enableGRIB ? true
-, enableJPG ? true
-, enableNetCDF ? true
-, enablePNG ? true
+, withAEC ? true
+, withBUFR ? true
+, withBuildTools ? true
+, withExamples ? false
+, withFortran ? true
+, withGRIB ? true
+, withJPG ? true
+, withNetCDF ? true
+, withPNG ? true
 }:
 
 with pkgs;
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-gWBKMfIwJq4BP0SCDelRNtl3cZ8Ic+xaPqeSZyKlpME=";
   };
 
-  postPatch = lib.optionalString enableJPG ''
+  postPatch = lib.optionalString withJPG ''
     substituteInPlace cmake/FindOpenJPEG.cmake --replace openjpeg-2.1 ${openjpeg.incDir}
   '';
 
@@ -30,27 +30,27 @@ stdenv.mkDerivation rec {
     ecbuild
     git
     perl
-  ] ++ lib.optional enableFortran gfortran;
+  ] ++ lib.optional withFortran gfortran;
 
   buildInputs = [ ]
-    ++ lib.optional enableAEC libaec
-    ++ lib.optional enableJPG openjpeg
-    ++ lib.optional enableNetCDF netcdf
-    ++ lib.optional enablePNG libpng
+    ++ lib.optional withAEC libaec
+    ++ lib.optional withJPG openjpeg
+    ++ lib.optional withNetCDF netcdf
+    ++ lib.optional withPNG libpng
   ;
 
   cmakeFlags = [
-    "-DENABLE_AEC=${if enableAEC then "ON" else "OFF"}"
-    "-DENABLE_BUILD_TOOLS=${if enableBuildTools then "ON" else "OFF"}"
-    "-DENABLE_EXAMPLES=${if enableExamples then "ON" else "OFF"}"
+    "-DENABLE_AEC=${if withAEC then "ON" else "OFF"}"
+    "-DENABLE_BUILD_TOOLS=${if withBuildTools then "ON" else "OFF"}"
+    "-DENABLE_EXAMPLES=${if withExamples then "ON" else "OFF"}"
     "-DENABLE_EXTRA_TESTS=OFF"
-    "-DENABLE_FORTRAN=${if enableFortran then "ON" else "OFF"}"
-    "-DENABLE_JPG=${if enableJPG then "ON" else "OFF"}"
+    "-DENABLE_FORTRAN=${if withFortran then "ON" else "OFF"}"
+    "-DENABLE_JPG=${if withJPG then "ON" else "OFF"}"
     "-DENABLE_JPG_LIBJASPER=OFF"
-    "-DENABLE_NETCDF=${if enableNetCDF then "ON" else "OFF"}"
-    "-DENABLE_PNG=${if enablePNG then "ON" else "OFF"}"
-    "-DENABLE_PRODUCT_BUFR=${if enableGRIB then "ON" else "OFF"}"
-    "-DENABLE_PRODUCT_GRIB=${if enableGRIB then "ON" else "OFF"}"
+    "-DENABLE_NETCDF=${if withNetCDF then "ON" else "OFF"}"
+    "-DENABLE_PNG=${if withPNG then "ON" else "OFF"}"
+    "-DENABLE_PRODUCT_BUFR=${if withGRIB then "ON" else "OFF"}"
+    "-DENABLE_PRODUCT_GRIB=${if withGRIB then "ON" else "OFF"}"
     "-DENABLE_PYTHON2=OFF"
   ];
 

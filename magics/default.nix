@@ -1,12 +1,12 @@
 { pkgs
-, enableCairo ? true
-, enableDoc ? false
-, enableEFAS ? false
-, enableGeoTIFF ? true
-, enableMetview ? true
-, enableMetviewNoQt ? false
-, enableNetCDF ? true
-, enableODB ? false
+, withCairo ? true
+, withDoc ? false
+, withEFAS ? false
+, withGeoTIFF ? true
+, withMetview ? true
+, withMetviewNoQt ? false
+, withNetCDF ? true
+, withODB ? false
 }:
 
 with pkgs;
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
     perl
     pkg-config
   ]
-  ++ lib.optionals enableDoc [ doxygen python3Packages.breathe sphinx python3Packages.sphinx-rtd-theme ]
+  ++ lib.optionals withDoc [ doxygen python3Packages.breathe sphinx python3Packages.sphinx-rtd-theme ]
   ;
 
   buildInputs = [
@@ -36,10 +36,10 @@ stdenv.mkDerivation rec {
     proj
     zlib
   ]
-  ++ lib.optional enableCairo pango
-  ++ lib.optionals enableGeoTIFF [ libgeotiff.dev libtiff ]
-  ++ lib.optional enableMetview qt5.full
-  ++ lib.optional enableNetCDF netcdf
+  ++ lib.optional withCairo pango
+  ++ lib.optionals withGeoTIFF [ libgeotiff.dev libtiff ]
+  ++ lib.optional withMetview qt5.full
+  ++ lib.optional withNetCDF netcdf
     # TODO: ODB
   ;
 
@@ -48,14 +48,14 @@ stdenv.mkDerivation rec {
   ];
 
   cmakeFlags = [
-    "-DENABLE_CAIRO=${if enableCairo then "ON" else "OFF"}"
-    "-DENABLE_DOCUMENTATION=${if enableDoc then "ON" else "OFF"}"
-    "-DENABLE_EFAS=${if enableEFAS then "ON" else "OFF"}"
-    "-DENABLE_GEOTIFF=${if enableGeoTIFF then "ON" else "OFF"}"
-    "-DENABLE_METVIEW=${if enableMetview then "ON" else "OFF"}"
-    "-DENABLE_METVIEW_NO_QT=${if enableMetviewNoQt then "ON" else "OFF"}"
-    "-DENABLE_NETCDF=${if enableNetCDF then "ON" else "OFF"}"
-    "-DENABLE_ODB=${if enableODB then "ON" else "OFF"}"
+    "-DENABLE_CAIRO=${if withCairo then "ON" else "OFF"}"
+    "-DENABLE_DOCUMENTATION=${if withDoc then "ON" else "OFF"}"
+    "-DENABLE_EFAS=${if withEFAS then "ON" else "OFF"}"
+    "-DENABLE_GEOTIFF=${if withGeoTIFF then "ON" else "OFF"}"
+    "-DENABLE_METVIEW=${if withMetview then "ON" else "OFF"}"
+    "-DENABLE_METVIEW_NO_QT=${if withMetviewNoQt then "ON" else "OFF"}"
+    "-DENABLE_NETCDF=${if withNetCDF then "ON" else "OFF"}"
+    "-DENABLE_ODB=${if withODB then "ON" else "OFF"}"
     "-DGEOTIFF_DIR=${libgeotiff.dev}"
     "-DGEOTIFF_PATH=${libgeotiff.dev}"
   ];
