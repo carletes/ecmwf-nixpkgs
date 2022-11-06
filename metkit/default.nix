@@ -1,9 +1,9 @@
 { pkgs
-, withBufr ? true
+, withBUFR ? true
 , withBuildTools ? true
 , withExperimental ? false
-, withGrib ? true
-, withNetcdf ? true
+, withGRIB ? true
+, withNetCDF ? true
 , withODB ? true
 }:
 
@@ -28,17 +28,17 @@ stdenv.mkDerivation rec {
   propagatedBuildInputs = [
     eckit
   ]
-  ++ lib.optional (withBufr || withGrib) eccodes
-  ++ lib.optional withNetcdf netcdf
+  ++ lib.optional (withBUFR || withGRIB) eccodes
+  ++ lib.optional withNetCDF netcdf
   ++ lib.optional withODB odc
   ;
 
   cmakeFlags = [
-    "-DENABLE_BUFR=${if withBufr then "ON" else "OFF"}"
+    "-DENABLE_BUFR=${if withBUFR then "ON" else "OFF"}"
     "-DENABLE_BUILD_TOOLS=${if withBuildTools then "ON" else "OFF"}"
     "-DENABLE_EXPERIMENTAL=${if withExperimental then "ON" else "OFF"}"
-    "-DENABLE_GRIB=${if withGrib then "ON" else "OFF"}"
-    "-DENABLE_NETCDF=${if withNetcdf then "ON" else "OFF"}"
+    "-DENABLE_GRIB=${if withGRIB then "ON" else "OFF"}"
+    "-DENABLE_NETCDF=${if withNetCDF then "ON" else "OFF"}"
     "-DENABLE_ODB=${if withODB then "ON" else "OFF"}"
   ];
 
