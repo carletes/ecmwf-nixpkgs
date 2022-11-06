@@ -12,6 +12,7 @@
             ecbuild = prev.callPackage ./ecbuild/default.nix { pkgs = prev; };
             eccodes = prev.callPackage ./eccodes/default.nix { pkgs = final; };
             eckit = prev.callPackage ./eckit/default.nix { pkgs = final; };
+            fdb = prev.callPackage ./fdb/default.nix { pkgs = final; };
             magics = prev.callPackage ./magics/default.nix { pkgs = final; };
             metkit = prev.callPackage ./metkit/default.nix { pkgs = final; };
             odc = prev.callPackage ./odc/default.nix { pkgs = final; };
@@ -27,6 +28,7 @@
             ecbuild = pkgs.ecbuild;
             eccodes = pkgs.eccodes;
             eckit = pkgs.eckit;
+            fdb = pkgs.fdb;
             magics = pkgs.magics;
             metkit = pkgs.metkit;
             odc = pkgs.odc;
