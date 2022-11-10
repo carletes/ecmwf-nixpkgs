@@ -47,11 +47,11 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     substituteInPlace regressions/ECKIT-166.sh.in \
-      --replace '#!/usr/bin/env bash' '${bash}/bin/bash'
+      --replace '#!/usr/bin/env bash' '#!${bash}/bin/bash'
     substituteInPlace regressions/ECKIT-175.sh.in \
-      --replace '#!/usr/bin/env bash' '${bash}/bin/bash'
+      --replace '#!/usr/bin/env bash' '#!${bash}/bin/bash'
     substituteInPlace regressions/ECKIT-221.sh.in \
-      --replace '#!/usr/bin/env bash' '${bash}/bin/bash'
+      --replace '#!/usr/bin/env bash' '#!${bash}/bin/bash'
   '';
 
   nativeBuildInputs = [
