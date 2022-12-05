@@ -21,25 +21,30 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-ngozEYVal5k5sD/Ovg+FQ6DSkRxn6r3O5MEmvbFNZd4=";
   };
 
+  patches = [
+    ./patches/001-tiff.patch
+  ];
+
   nativeBuildInputs = [
     ecbuild
     git
     perl
     pkg-config
-    qt5.wrapQtAppsHook
   ]
+  ++ lib.optional withMetview qt5.wrapQtAppsHook
   ++ lib.optionals withDoc [ doxygen python3Packages.breathe sphinx python3Packages.sphinx-rtd-theme ]
   ;
 
   propagatedBuildInputs = [
+    curl.dev
     eccodes
     expat
     ksh
     proj
     zlib
   ]
-  ++ lib.optional withCairo pango
-  ++ lib.optionals withGeoTIFF [ libgeotiff.dev libtiff ]
+  ++ lib.optionals withCairo [ fribidi libdatrie libthai libtiff pango ]
+  ++ lib.optionals withGeoTIFF [ libgeotiff.dev ]
   ++ lib.optional withMetview qt5.qtbase
   ++ lib.optional withNetCDF netcdf
   ++ lib.optional withODB odc
