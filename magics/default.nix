@@ -26,6 +26,7 @@ stdenv.mkDerivation rec {
     git
     perl
     pkg-config
+    qt5.wrapQtAppsHook
   ]
   ++ lib.optionals withDoc [ doxygen python3Packages.breathe sphinx python3Packages.sphinx-rtd-theme ]
   ;
@@ -39,7 +40,7 @@ stdenv.mkDerivation rec {
   ]
   ++ lib.optional withCairo pango
   ++ lib.optionals withGeoTIFF [ libgeotiff.dev libtiff ]
-  ++ lib.optional withMetview qt5.full
+  ++ lib.optional withMetview qt5.qtbase
   ++ lib.optional withNetCDF netcdf
   ++ lib.optional withODB odc
   ;
