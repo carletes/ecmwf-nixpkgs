@@ -11,6 +11,16 @@
 }:
 
 with pkgs;
+let
+  # I cannot get the Fortran bindings to build on Darwin. The build error looks like:
+  #
+  # -- Performing Test eccodes_Fortran_FLAG_TEST_1 - Failed
+  # CMake Error at /nix/store/9wd2cbjd7qi81arqiq2246f5890ylvcb-ecbuild-3.7.0/share/ecbuild/cmake/ecbuild_log.cmake:190 (message):
+  #   CRITICAL - Fortran compiler
+  #   /nix/store/p4npag17lbpskv5qli4ph0p7409nzk1x-gfortran-wrapper-11.3.0/bin/gfortran
+  #   does not recognise Fortran flag '-fallow-argument-mismatch'
+  fortranEnabled = withFortran && (! stdenv.isDarwin);
+in
 stdenv.mkDerivation rec {
   pname = "eccodes";
   version = "2.27.0";
@@ -34,7 +44,7 @@ stdenv.mkDerivation rec {
     ecbuild
     git
     perl
-  ] ++ lib.optional withFortran gfortran;
+  ] ++ lib.optional fortranEnabled gfortran;
 
   propagatedBuildInputs = [ ]
     ++ lib.optional withAEC libaec
@@ -48,7 +58,7 @@ stdenv.mkDerivation rec {
     "-DENABLE_BUILD_TOOLS=${if withBuildTools then "ON" else "OFF"}"
     "-DENABLE_EXAMPLES=${if withExamples then "ON" else "OFF"}"
     "-DENABLE_EXTRA_TESTS=ON"
-    "-DENABLE_FORTRAN=${if withFortran then "ON" else "OFF"}"
+    "-DENABLE_FORTRAN=${if fortranEnabled then "ON" else "OFF"}"
     "-DENABLE_JPG=${if withJPG then "ON" else "OFF"}"
     "-DENABLE_JPG_LIBJASPER=OFF"
     "-DENABLE_NETCDF=${if withNetCDF then "ON" else "OFF"}"
