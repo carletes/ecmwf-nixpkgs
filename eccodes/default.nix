@@ -23,7 +23,11 @@ stdenv.mkDerivation rec {
   };
 
   postPatch = lib.optionalString withJPG ''
-    substituteInPlace cmake/FindOpenJPEG.cmake --replace openjpeg-2.1 ${openjpeg.incDir}
+    substituteInPlace cmake/FindOpenJPEG.cmake \
+      --replace openjpeg-2.1 ${openjpeg.incDir}
+
+    substituteInPlace definitions/check_grib_defs.pl \
+      --replace '#!/usr/bin/env perl' '#!${perl}/bin/perl'
   '';
 
   nativeBuildInputs = [
@@ -43,7 +47,7 @@ stdenv.mkDerivation rec {
     "-DENABLE_AEC=${if withAEC then "ON" else "OFF"}"
     "-DENABLE_BUILD_TOOLS=${if withBuildTools then "ON" else "OFF"}"
     "-DENABLE_EXAMPLES=${if withExamples then "ON" else "OFF"}"
-    "-DENABLE_EXTRA_TESTS=OFF"
+    "-DENABLE_EXTRA_TESTS=ON"
     "-DENABLE_FORTRAN=${if withFortran then "ON" else "OFF"}"
     "-DENABLE_JPG=${if withJPG then "ON" else "OFF"}"
     "-DENABLE_JPG_LIBJASPER=OFF"
@@ -55,6 +59,21 @@ stdenv.mkDerivation rec {
   ];
 
   doCheck = true;
+
+  checkInputs = [
+    eccodes-test-data
+  ];
+
+  preCheck = ''
+    mkdir -p data
+    cp -Rp ${eccodes-test-data}/share/* data/
+
+    # Some tests write into these directories.
+    chmod 0755 data data/bufr data/gts data/metar data/tigge
+
+    # One test overwrites this file.
+    chmod 0644 data/tigge_ecmwf.grib2
+  '';
 
   meta = with lib; {
     description = "Software for encoding and decoding GRIB, BUFR and GTS abbreviated header messages";
