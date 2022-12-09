@@ -26,15 +26,39 @@ stdenv.mkDerivation rec {
     eckit
   ];
 
+  postPatch = ''
+    for r in ODB-374 ODB-387-and-388 ODB-463 ODB-529 SD-45315 SD-45479 ; do
+      substituteInPlace regressions/$r.sh \
+        --replace '#!/bin/bash' '${bash}/bin/bash'
+    done
+
+    for f in api/usage_examples.sh c_api/usage_examples.sh ; do
+      substituteInPlace tests/$f \
+        --replace '#!/bin/bash' '${bash}/bin/bash'
+    done
+
+    for t in exit_codes header import split sql_bitfields sql_format sql_like sql_split sql_variables ; do
+      substituteInPlace tests/tools/test_odb_$t.sh \
+        --replace '#!/bin/bash' '${bash}/bin/bash'
+    done
+  '';
+
   cmakeFlags = [
     "-DENABLE_FORTRAN=${if withFortran then "ON" else "OFF"}"
-
-    # Tests need to download data, which we cannot do at build-time.
-    # TODO: Find a way of downloading test data and enable tests.
-    "-DENABLE_TESTS=OFF"
+    "-DENABLE_TESTS=ON"
   ];
 
   doCheck = true;
+
+  checkInputs = [
+    odc-test-data
+  ];
+
+  preCheck = ''
+    mkdir -p regressions tests
+    cp -R ${pkgs.odc-test-data}/share/regressions/* regressions/
+    cp -R ${pkgs.odc-test-data}/share/tests/* tests/
+  '';
 
   meta = with lib; {
     description = "Package to read/write ODB data";

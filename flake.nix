@@ -18,6 +18,7 @@
             magics = prev.callPackage ./magics/default.nix { pkgs = final; };
             metkit = prev.callPackage ./metkit/default.nix { pkgs = final; };
             odc = prev.callPackage ./odc/default.nix { pkgs = final; };
+            odc-test-data = prev.callPackage ./odc/test-data.nix { pkgs = final; };
           }
         );
     } // (
