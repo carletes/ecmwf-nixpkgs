@@ -33,6 +33,13 @@ stdenv.mkDerivation rec {
   ++ lib.optional withODB odc
   ;
 
+  postPatch = ''
+    for r in 89 ; do
+      substituteInPlace tests/regressions/METK-$r/METK-$r.sh.in \
+        --replace '#!/usr/bin/env bash' '${bash}/bin/bash'
+    done
+  '';
+
   cmakeFlags = [
     "-DENABLE_BUFR=${if withBUFR then "ON" else "OFF"}"
     "-DENABLE_BUILD_TOOLS=${if withBuildTools then "ON" else "OFF"}"
@@ -42,9 +49,16 @@ stdenv.mkDerivation rec {
     "-DENABLE_ODB=${if withODB then "ON" else "OFF"}"
   ];
 
-  # Some tests require access to network for downloading data.
-  # TODO: Fetch test data before build.
-  doCheck = false;
+  doCheck = true;
+
+  checkInputs = [
+    metkit-test-data
+  ];
+
+  preCheck = ''
+    mkdir -p tests/
+    cp -R ${pkgs.metkit-test-data}/share/* tests/
+  '';
 
   meta = with lib; {
     description = "Toolkit for manipulating and describing meteorological objects";

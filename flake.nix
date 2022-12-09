@@ -17,6 +17,7 @@
             fdb-test-data = prev.callPackage ./fdb/test-data.nix { pkgs = final; };
             magics = prev.callPackage ./magics/default.nix { pkgs = final; };
             metkit = prev.callPackage ./metkit/default.nix { pkgs = final; };
+            metkit-test-data = prev.callPackage ./metkit/test-data.nix { pkgs = final; };
             odc = prev.callPackage ./odc/default.nix { pkgs = final; };
             odc-test-data = prev.callPackage ./odc/test-data.nix { pkgs = final; };
           }
