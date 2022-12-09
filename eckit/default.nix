@@ -41,6 +41,10 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-7kWBT5uOowCjMFymnhzQqgHl6ifCdo7SI7DnaLMWq/Q=";
   };
 
+  patches = [
+    ./patches/001-disable-urlhandle-test.patch
+  ];
+
   postPatch = ''
     substituteInPlace regressions/ECKIT-166.sh.in \
       --replace '#!/usr/bin/env bash' '${bash}/bin/bash'
@@ -85,6 +89,7 @@ stdenv.mkDerivation rec {
     "-DENABLE_ECKIT_SQL=${if withSQL then "ON" else "OFF"}"
     "-DENABLE_EIGEN=${if withEigen then "ON" else "OFF"}"
     "-DENABLE_EXPERIMENTAL=${if withExperimental then "ON" else "OFF"}"
+    "-DENABLE_EXTRA_TESTS=ON"
     "-DENABLE_JEMALLOC=${if withJemalloc then "ON" else "OFF"}"
     "-DENABLE_LZ4=${if withLZ4 then "ON" else "OFF"}"
     "-DENABLE_OMP=${if withOpenMP then "ON" else "OFF"}"
@@ -93,10 +98,6 @@ stdenv.mkDerivation rec {
     "-DENABLE_SSL=${if withSSL then "ON" else "OFF"}"
     "-DENABLE_UNICODE=${if withUnicode then "ON" else "OFF"}"
     "-DENABLE_XXHASH=${if withXxHash then "ON" else "OFF"}"
-
-    # Test data needed for the extra tests, which we cannot download while building.
-    # TODO: Find a way of prefetching the data and with this.
-    "-DENABLE_EXTRA_TESTS=OFF"
 
     # Things I don't know how to handle.
     "-DENABLE_CUDA=OFF"
@@ -109,6 +110,15 @@ stdenv.mkDerivation rec {
   ];
 
   doCheck = true;
+
+  checkInputs = [
+    eckit-test-data
+  ];
+
+  preCheck = ''
+    mkdir -p tests
+    cp -R ${pkgs.eckit-test-data}/share/* tests/
+  '';
 
   meta = with lib; {
     description = "C++ toolkit that supports development of tools and applications at ECMWF";
