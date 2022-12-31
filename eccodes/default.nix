@@ -63,7 +63,7 @@ stdenv.mkDerivation rec {
     "-DENABLE_JPG_LIBJASPER=OFF"
     "-DENABLE_NETCDF=${if withNetCDF then "ON" else "OFF"}"
     "-DENABLE_PNG=${if withPNG then "ON" else "OFF"}"
-    "-DENABLE_PRODUCT_BUFR=${if withGRIB then "ON" else "OFF"}"
+    "-DENABLE_PRODUCT_BUFR=${if withBUFR then "ON" else "OFF"}"
     "-DENABLE_PRODUCT_GRIB=${if withGRIB then "ON" else "OFF"}"
     "-DENABLE_PYTHON2=OFF"
   ];
