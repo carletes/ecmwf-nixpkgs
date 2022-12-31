@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "ecmwf": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 0,
+        "narHash": "sha256-wjIJlnj/mFAcNwkmpRF5yUWQ4zq7nHnHOPgXrOCZ43Y=",
+        "path": "../..",
+        "type": "path"
+      },
+      "original": {
+        "path": "../..",
+        "type": "path"
+      }
+    },
     "flake-utils": {
       "locked": {
         "lastModified": 1667395993,
@@ -32,6 +52,7 @@
     },
     "root": {
       "inputs": {
+        "ecmwf": "ecmwf",
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs"
       }
