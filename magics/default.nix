@@ -66,6 +66,8 @@ stdenv.mkDerivation rec {
   ]
   ;
 
+  doCheck = true;
+
   meta = with lib; {
     description = "Software to visualise meteorological data in GRIB, NetCDF, BUFR and ODB format";
     homepage = "https://confluence.ecmwf.int/display/MAGP/Magics";
