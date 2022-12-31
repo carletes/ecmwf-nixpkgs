@@ -59,9 +59,12 @@ stdenv.mkDerivation rec {
     "-DENABLE_METVIEW_NO_QT=${if withMetviewNoQt then "ON" else "OFF"}"
     "-DENABLE_NETCDF=${if withNetCDF then "ON" else "OFF"}"
     "-DENABLE_ODB=${if withODB then "ON" else "OFF"}"
+  ]
+  ++ lib.optionals withGeoTIFF [
     "-DGEOTIFF_DIR=${libgeotiff.dev}"
     "-DGEOTIFF_PATH=${libgeotiff.dev}"
-  ];
+  ]
+  ;
 
   meta = with lib; {
     description = "Software to visualise meteorological data in GRIB, NetCDF, BUFR and ODB format";
