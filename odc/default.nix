@@ -29,17 +29,17 @@ stdenv.mkDerivation rec {
   postPatch = ''
     for r in ODB-374 ODB-387-and-388 ODB-463 ODB-529 SD-45315 SD-45479 ; do
       substituteInPlace regressions/$r.sh \
-        --replace '#!/bin/bash' '${bash}/bin/bash'
+        --replace '#!/bin/bash' '#!${bash}/bin/bash'
     done
 
     for f in api/usage_examples.sh c_api/usage_examples.sh ; do
       substituteInPlace tests/$f \
-        --replace '#!/bin/bash' '${bash}/bin/bash'
+        --replace '#!/bin/bash' '#!${bash}/bin/bash'
     done
 
     for t in exit_codes header import split sql_bitfields sql_format sql_like sql_split sql_variables ; do
       substituteInPlace tests/tools/test_odb_$t.sh \
-        --replace '#!/bin/bash' '${bash}/bin/bash'
+        --replace '#!/bin/bash' '#!${bash}/bin/bash'
     done
   '';
 
