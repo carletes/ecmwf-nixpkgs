@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
   postPatch = ''
     for r in 89 ; do
       substituteInPlace tests/regressions/METK-$r/METK-$r.sh.in \
-        --replace '#!/usr/bin/env bash' '${bash}/bin/bash'
+        --replace '#!/usr/bin/env bash' '#!${bash}/bin/bash'
     done
   '';
 
