@@ -29,13 +29,7 @@
         in
         {
           packages = {
-            ecbuild = pkgs.ecbuild;
-            eccodes = pkgs.eccodes;
-            eckit = pkgs.eckit;
-            fdb = pkgs.fdb;
-            magics = pkgs.magics;
-            metkit = pkgs.metkit;
-            odc = pkgs.odc;
+            inherit (pkgs) ecbuild eccodes eckit fdb magics metkit odc;
           };
         }));
 }
