@@ -7,22 +7,21 @@
   outputs = { self, nixpkgs, flake-utils }:
     {
       overlays.default =
-        (
-          final: prev: {
-            ecbuild = prev.callPackage ./ecbuild/default.nix { pkgs = prev; };
-            eccodes = prev.callPackage ./eccodes/default.nix { pkgs = final; };
-            eccodes-test-data = prev.callPackage ./eccodes/test-data.nix { pkgs = final; };
-            eckit = prev.callPackage ./eckit/default.nix { pkgs = final; };
-            eckit-test-data = prev.callPackage ./eckit/test-data.nix { pkgs = final; };
-            fdb = prev.callPackage ./fdb/default.nix { pkgs = final; };
-            fdb-test-data = prev.callPackage ./fdb/test-data.nix { pkgs = final; };
-            magics = prev.callPackage ./magics/default.nix { pkgs = final; };
-            metkit = prev.callPackage ./metkit/default.nix { pkgs = final; };
-            metkit-test-data = prev.callPackage ./metkit/test-data.nix { pkgs = final; };
-            odc = prev.callPackage ./odc/default.nix { pkgs = final; };
-            odc-test-data = prev.callPackage ./odc/test-data.nix { pkgs = final; };
-          }
-        );
+        final: prev: {
+          ecbuild = prev.callPackage ./ecbuild { pkgs = prev; };
+          eccodes = prev.callPackage ./eccodes { pkgs = final; };
+          eccodes-test-data = prev.callPackage ./eccodes/test-data.nix { pkgs = final; };
+          eckit = prev.callPackage ./eckit { pkgs = final; };
+          eckit-test-data = prev.callPackage ./eckit/test-data.nix { pkgs = final; };
+          fdb = prev.callPackage ./fdb { pkgs = final; };
+          fdb-test-data = prev.callPackage ./fdb/test-data.nix { pkgs = final; };
+          magics = prev.callPackage ./magics { pkgs = final; };
+          metkit = prev.callPackage ./metkit { pkgs = final; };
+          metkit-test-data = prev.callPackage ./metkit/test-data.nix { pkgs = final; };
+          odc = prev.callPackage ./odc { pkgs = final; };
+          odc-test-data = prev.callPackage ./odc/test-data.nix { pkgs = final; };
+        }
+      ;
     } // (
       flake-utils.lib.eachDefaultSystem (system:
         let
