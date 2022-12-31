@@ -49,11 +49,11 @@ stdenv.mkDerivation rec {
   postPatch = ''
     for r in 238 239 240 241 243 251 260 264 266 267 268 271 275 276 282 291 292 ; do
       substituteInPlace tests/regressions/FDB-$r/FDB-$r.sh.in \
-        --replace '#!/usr/bin/env bash' '${bash}/bin/bash'
+        --replace '#!/usr/bin/env bash' '#!${bash}/bin/bash'
     done
 
     substituteInPlace tests/fdb/tools/fdb_info.sh.in \
-      --replace '#!/usr/bin/env bash' '${bash}/bin/bash'
+      --replace '#!/usr/bin/env bash' '#!${bash}/bin/bash'
   '';
 
   doCheck = true;
