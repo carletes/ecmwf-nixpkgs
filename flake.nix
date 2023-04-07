@@ -40,6 +40,17 @@
             inherit (final)
               stdenv fetchurl;
           };
+          ecflow = prev.callPackage ./ecflow {
+            inherit (final)
+              lib stdenv fetchFromGitHub
+              boost
+              ecbuild
+              perl
+              pkg-config
+              python3Full
+              qt6
+              ;
+          };
           eckit = prev.callPackage ./eckit {
             inherit (final)
               lib stdenv fetchFromGitHub
@@ -221,6 +232,7 @@
               atlas
               ecbuild
               eccodes
+              ecflow
               eckit
               fckit
               ecmwf-mir
