@@ -1,0 +1,5 @@
+*.check
+*.ecf.log
+*.job*
+t1.*
+test.def
