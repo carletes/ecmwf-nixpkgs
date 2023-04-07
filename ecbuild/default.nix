@@ -3,13 +3,13 @@
 with pkgs;
 stdenv.mkDerivation rec {
   pname = "ecbuild";
-  version = "3.7.0";
+  version = "3.7.2";
 
   src = fetchFromGitHub {
     owner = "ecmwf";
     repo = "ecbuild";
     rev = "${version}";
-    sha256 = "sha256-JFQP7ObvOom3Ta6gonOJfEAHNSTZUi5kP5H+uTluktU=";
+    sha256 = "sha256-6l6RpU5pp+Snxbvt6gneXHKSRjADnr3BNvNGNY/ROS4=";
   };
 
   patches = [

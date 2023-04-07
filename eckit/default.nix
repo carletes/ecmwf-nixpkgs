@@ -32,13 +32,13 @@
 with pkgs;
 stdenv.mkDerivation rec {
   pname = "eckit";
-  version = "1.20.2";
+  version = "1.23.0";
 
   src = fetchFromGitHub {
     owner = "ecmwf";
     repo = "eckit";
     rev = version;
-    sha256 = "sha256-7kWBT5uOowCjMFymnhzQqgHl6ifCdo7SI7DnaLMWq/Q=";
+    sha256 = "sha256-A0JHLVnydrRar33XBrVSauZx7UX+L0tiQ2FuC9uflOM=";
   };
 
   patches = [

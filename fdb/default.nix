@@ -12,13 +12,13 @@
 with pkgs;
 stdenv.mkDerivation rec {
   pname = "fdb";
-  version = "5.10.8";
+  version = "5.11.7";
 
   src = fetchFromGitHub {
     owner = "ecmwf";
     repo = "fdb";
     rev = version;
-    sha256 = "sha256-YSjG5j/eF8baY7ylRzPAdPFbK04T3zCHoDeug3VYkME=";
+    sha256 = "sha256-zPfDcJG3o2GEOhS4xrMVWVTZ+OIjpAsTQMe20kDVPdY=";
   };
 
   nativeBuildInputs = [
@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    for r in 238 239 240 241 243 251 260 264 266 267 268 271 275 276 282 291 292 ; do
+    for r in 238 239 240 241 243 245 251 260 264 266 267 268 271 275 276 282 291 292 ; do
       substituteInPlace tests/regressions/FDB-$r/FDB-$r.sh.in \
         --replace '#!/usr/bin/env bash' '#!${bash}/bin/bash'
     done
@@ -74,4 +74,3 @@ stdenv.mkDerivation rec {
     platforms = platforms.unix;
   };
 }
-

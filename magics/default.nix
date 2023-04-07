@@ -12,13 +12,13 @@
 with pkgs;
 stdenv.mkDerivation rec {
   pname = "magics";
-  version = "4.12.1";
+  version = "4.13.0";
 
   src = fetchFromGitHub {
     owner = "ecmwf";
     repo = "magics";
     rev = version;
-    sha256 = "sha256-ngozEYVal5k5sD/Ovg+FQ6DSkRxn6r3O5MEmvbFNZd4=";
+    sha256 = "sha256-pvq9M9i4vsDxj0oc20nSlWyuto3xXr8yLaak+kUtJ4g=";
   };
 
   patches = [

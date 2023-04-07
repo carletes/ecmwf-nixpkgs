@@ -23,13 +23,13 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "eccodes";
-  version = "2.27.0";
+  version = "2.30.0";
 
   src = fetchFromGitHub {
     owner = "ecmwf";
     repo = "eccodes";
     rev = "${version}";
-    sha256 = "sha256-gWBKMfIwJq4BP0SCDelRNtl3cZ8Ic+xaPqeSZyKlpME=";
+    sha256 = "sha256-PjFGViGFqyxNdLAEeIulUo0s//2988wKTOjSqzgNRmo=";
   };
 
   postPatch = lib.optionalString withJPG ''

@@ -10,13 +10,13 @@
 with pkgs;
 stdenv.mkDerivation rec {
   pname = "metkit";
-  version = "1.9.2";
+  version = "1.10.11";
 
   src = fetchFromGitHub {
     owner = "ecmwf";
     repo = "metkit";
     rev = version;
-    sha256 = "sha256-7q6UxjoYFPExIVccTY2GrZHK1+XwoiNJVYsUONYlzAc=";
+    sha256 = "sha256-lJLcu6IPSHPBe78axT3RQupJWeiJ84CBRYtyecBJ2JE=";
   };
 
   nativeBuildInputs = [
@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
   ;
 
   postPatch = ''
-    for r in 89 ; do
+    for r in 89 103 ; do
       substituteInPlace tests/regressions/METK-$r/METK-$r.sh.in \
         --replace '#!/usr/bin/env bash' '#!${bash}/bin/bash'
     done
