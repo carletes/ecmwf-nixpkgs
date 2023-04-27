@@ -1,14 +1,13 @@
-{ pkgs }:
+{ lib, stdenv, fetchFromGitHub, cmake }:
 
-with pkgs;
 stdenv.mkDerivation rec {
   pname = "ecbuild";
   version = "3.7.2";
 
-  src = fetchFromGitHub {
+  src = lib.makeOverridable fetchFromGitHub {
     owner = "ecmwf";
     repo = "ecbuild";
-    rev = "${version}";
+    rev = version;
     sha256 = "sha256-6l6RpU5pp+Snxbvt6gneXHKSRjADnr3BNvNGNY/ROS4=";
   };
 

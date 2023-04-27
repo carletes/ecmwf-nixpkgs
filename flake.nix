@@ -8,18 +8,122 @@
     {
       overlays.default =
         final: prev: {
-          ecbuild = prev.callPackage ./ecbuild { pkgs = prev; };
-          eccodes = prev.callPackage ./eccodes { pkgs = final; };
-          eccodes-test-data = prev.callPackage ./eccodes/test-data.nix { pkgs = final; };
-          eckit = prev.callPackage ./eckit { pkgs = final; };
-          eckit-test-data = prev.callPackage ./eckit/test-data.nix { pkgs = final; };
-          fdb = prev.callPackage ./fdb { pkgs = final; };
-          fdb-test-data = prev.callPackage ./fdb/test-data.nix { pkgs = final; };
-          magics = prev.callPackage ./magics { pkgs = final; };
-          metkit = prev.callPackage ./metkit { pkgs = final; };
-          metkit-test-data = prev.callPackage ./metkit/test-data.nix { pkgs = final; };
-          odc = prev.callPackage ./odc { pkgs = final; };
-          odc-test-data = prev.callPackage ./odc/test-data.nix { pkgs = final; };
+          ecbuild = prev.callPackage ./ecbuild {
+            inherit (prev)
+              lib stdenv fetchFromGitHub
+              cmake;
+          };
+          eccodes = prev.callPackage ./eccodes {
+            inherit (final)
+              lib stdenv fetchFromGitHub
+              ecbuild eccodes-test-data gfortran git libaec libpng netcdf openjpeg perl;
+          };
+          eccodes-test-data = prev.callPackage ./eccodes/test-data.nix {
+            inherit (final)
+              stdenv fetchurl;
+          };
+          eckit = prev.callPackage ./eckit {
+            inherit (final)
+              lib stdenv fetchFromGitHub
+              armadillo
+              bash
+              bison
+              bzip2
+              curl
+              ecbuild
+              eckit-test-data
+              eigen
+              flex
+              git
+              jemalloc
+              libaec
+              lz4
+              ncurses
+              openssl
+              perl
+              pkg-config
+              snappy
+              xxHash;
+          };
+          eckit-test-data = prev.callPackage ./eckit/test-data.nix {
+            inherit (final)
+              stdenv fetchurl;
+          };
+          fdb = prev.callPackage ./fdb {
+            inherit (final)
+              lib stdenv fetchFromGitHub
+              bash
+              ecbuild
+              eccodes
+              eckit
+              fdb-test-data
+              git
+              metkit
+              perl;
+          };
+          fdb-test-data = prev.callPackage ./fdb/test-data.nix {
+            inherit (final)
+              stdenv fetchurl;
+          };
+          magics = prev.callPackage ./magics {
+            inherit (final)
+              lib stdenv fetchFromGitHub
+              doxygen
+              curl
+              ecbuild
+              eccodes
+              expat
+              fribidi
+              git
+              ksh
+              libdatrie
+              libgeotiff
+              libthai
+              libtiff
+              netcdf
+              odc
+              pango
+              perl
+              pkg-config
+              proj
+              python3Packages
+              qt5
+              sphinx
+              zlib;
+          };
+          metkit = prev.callPackage ./metkit {
+            inherit (final)
+              lib stdenv fetchFromGitHub
+              bash
+              ecbuild
+              eccodes
+              eckit
+              git
+              metkit-test-data
+              netcdf
+              odc
+              perl
+              ;
+          };
+          metkit-test-data = prev.callPackage ./metkit/test-data.nix {
+            inherit (final)
+              stdenv fetchurl;
+          };
+          odc = prev.callPackage ./odc {
+            inherit (final)
+              lib stdenv fetchFromGitHub
+              bash
+              ecbuild
+              eckit
+              gfortran
+              git
+              odc-test-data
+              perl;
+          };
+          odc-test-data = prev.callPackage ./odc/test-data.nix {
+            inherit (final)
+              stdenv fetchurl;
+          };
         }
       ;
     } // (

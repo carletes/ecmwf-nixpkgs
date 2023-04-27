@@ -1,22 +1,43 @@
-{ pkgs
+{ lib
+, stdenv
+, fetchFromGitHub
+, bash
+, bison
+, ecbuild
+, eckit-test-data
+, flex
+, git
+, ncurses
+, perl
+, pkg-config
 , withAEC ? true
+, libaec
 , withAIO ? true
 , withArmadillo ? false
+, armadillo ? null
 , withBuildTools ? true
 , withBzip2 ? true
+, bzip2
 , withCurl ? true
+, curl
 , withEckitCmd ? true
 , withEigen ? true
+, eigen
 , withExperimental ? false
 , withJemalloc ? false
+, jemalloc ? null
 , withLZ4 ? true
+, lz4
 , withOpenMP ? false
 , withSandbox ? false
 , withSnappy ? true
+, snappy
 , withSQL ? true
 , withSSL ? true
+, openssl
 , withUnicode ? true
 , withXxHash ? true
+, xxHash
 
   # Things I don't know how to handle:
 
@@ -29,12 +50,22 @@
   # , withViennaCL ? false
 }:
 
-with pkgs;
+assert withAEC -> libaec != null;
+assert withArmadillo -> armadillo != null;
+assert withBzip2 -> bzip2 != null;
+assert withCurl -> curl != null;
+assert withEigen -> eigen != null;
+assert withJemalloc -> jemalloc != null;
+assert withLZ4 -> lz4 != null;
+assert withSnappy -> snappy != null;
+assert withSSL -> openssl != null;
+assert withXxHash -> xxHash != null;
+
 stdenv.mkDerivation rec {
   pname = "eckit";
   version = "1.23.0";
 
-  src = fetchFromGitHub {
+  src = lib.makeOverridable fetchFromGitHub {
     owner = "ecmwf";
     repo = "eckit";
     rev = version;
@@ -117,7 +148,7 @@ stdenv.mkDerivation rec {
 
   preCheck = ''
     mkdir -p tests
-    cp -R ${pkgs.eckit-test-data}/share/* tests/
+    cp -R ${eckit-test-data}/share/* tests/
   '';
 
   meta = with lib; {

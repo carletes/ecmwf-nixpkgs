@@ -1,6 +1,5 @@
-{ pkgs }:
+{ stdenv, fetchurl }:
 
-with pkgs;
 stdenv.mkDerivation {
   pname = "metkit-test-data";
   version = "2022-12-09-001";

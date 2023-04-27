@@ -1,13 +1,23 @@
-{ pkgs
+{ lib
+, stdenv
+, fetchFromGitHub
+, bash
+, ecbuild
+, eckit
+, git
+, odc-test-data
+, perl
 , withFortran ? false
+, gfortran ? null
 }:
 
-with pkgs;
+assert withFortran -> gfortran != null;
+
 stdenv.mkDerivation rec {
   pname = "odc";
   version = "1.4.6";
 
-  src = fetchFromGitHub {
+  src = lib.makeOverridable fetchFromGitHub {
     owner = "ecmwf";
     repo = "odc";
     rev = version;
@@ -56,8 +66,8 @@ stdenv.mkDerivation rec {
 
   preCheck = ''
     mkdir -p regressions tests
-    cp -R ${pkgs.odc-test-data}/share/regressions/* regressions/
-    cp -R ${pkgs.odc-test-data}/share/tests/* tests/
+    cp -R ${odc-test-data}/share/regressions/* regressions/
+    cp -R ${odc-test-data}/share/tests/* tests/
   '';
 
   meta = with lib; {

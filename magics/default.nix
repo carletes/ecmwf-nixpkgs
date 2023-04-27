@@ -1,20 +1,51 @@
-{ pkgs
+{ lib
+, stdenv
+, fetchFromGitHub
+, curl
+, ecbuild
+, eccodes
+, expat
+, git
+, ksh
+, perl
+, pkg-config
+, proj
+, zlib
 , withCairo ? true
+, fribidi
+, libdatrie
+, libthai
+, libtiff
+, pango
 , withDoc ? false
+, doxygen ? null
+, sphinx ? null
+, python3Packages ? null
 , withEFAS ? false
 , withGeoTIFF ? true
+, libgeotiff
 , withMetview ? true
+, qt5
 , withMetviewNoQt ? false
 , withNetCDF ? true
+, netcdf
 , withODB ? false
+, odc ? null
 }:
 
-with pkgs;
+assert withCairo -> fribidi != null && libdatrie != null && libthai != null && libtiff != null && pango != null;
+assert withDoc -> doxygen != null && python3Packages != null && sphinx != null;
+assert withGeoTIFF -> libgeotiff != null;
+assert ! (withMetview && withMetviewNoQt);
+assert withMetview -> qt5 != null;
+assert withNetCDF -> netcdf != null;
+assert withODB -> odc != null;
+
 stdenv.mkDerivation rec {
   pname = "magics";
   version = "4.13.0";
 
-  src = fetchFromGitHub {
+  src = lib.makeOverridable fetchFromGitHub {
     owner = "ecmwf";
     repo = "magics";
     rev = version;

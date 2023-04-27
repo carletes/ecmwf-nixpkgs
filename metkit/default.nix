@@ -1,18 +1,32 @@
-{ pkgs
+{ lib
+, stdenv
+, fetchFromGitHub
+, bash
+, ecbuild
+, eckit
+, git
+, metkit-test-data
+, perl
 , withBUFR ? true
+, eccodes
 , withBuildTools ? true
 , withExperimental ? false
 , withGRIB ? true
 , withNetCDF ? true
+, netcdf
 , withODB ? true
+, odc
 }:
 
-with pkgs;
+assert withBUFR || withGRIB -> eccodes != null;
+assert withNetCDF -> netcdf != null;
+assert withODB -> odc != null;
+
 stdenv.mkDerivation rec {
   pname = "metkit";
   version = "1.10.11";
 
-  src = fetchFromGitHub {
+  src = lib.makeOverridable fetchFromGitHub {
     owner = "ecmwf";
     repo = "metkit";
     rev = version;
@@ -57,7 +71,7 @@ stdenv.mkDerivation rec {
 
   preCheck = ''
     mkdir -p tests/
-    cp -R ${pkgs.metkit-test-data}/share/* tests/
+    cp -R ${metkit-test-data}/share/* tests/
   '';
 
   meta = with lib; {

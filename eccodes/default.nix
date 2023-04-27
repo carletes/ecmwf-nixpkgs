@@ -1,16 +1,31 @@
-{ pkgs
+{ lib
+, stdenv
+, fetchFromGitHub
+, ecbuild
+, eccodes-test-data
+, git
+, perl
 , withAEC ? true
+, libaec
 , withBUFR ? true
 , withBuildTools ? true
 , withExamples ? false
 , withFortran ? true
+, gfortran
 , withGRIB ? true
 , withJPG ? true
+, openjpeg
 , withNetCDF ? true
+, netcdf
 , withPNG ? true
+, libpng
 }:
 
-with pkgs;
+assert withAEC -> libaec != null;
+assert withJPG -> openjpeg != null;
+assert withNetCDF -> netcdf != null;
+assert withPNG -> libpng != null;
+
 let
   # I cannot get the Fortran bindings to build on Darwin. The build error looks like:
   #
@@ -21,14 +36,15 @@ let
   #   does not recognise Fortran flag '-fallow-argument-mismatch'
   fortranEnabled = withFortran && (! stdenv.isDarwin);
 in
-stdenv.mkDerivation rec {
+stdenv.mkDerivation
+rec {
   pname = "eccodes";
   version = "2.30.0";
 
-  src = fetchFromGitHub {
+  src = lib.makeOverridable fetchFromGitHub {
     owner = "ecmwf";
     repo = "eccodes";
-    rev = "${version}";
+    rev = version;
     sha256 = "sha256-PjFGViGFqyxNdLAEeIulUo0s//2988wKTOjSqzgNRmo=";
   };
 

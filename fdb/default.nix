@@ -1,20 +1,32 @@
-{ pkgs
+{ lib
+, stdenv
+, fetchFromGitHub
+, bash
+, ecbuild
+, eccodes
+, eckit
+, fdb-test-data
+, git
+, metkit
+, perl
 , withBuildTools ? true
 , withExperimental ? false
 , withLustre ? false
 , withPmem ? false
+, pmdk ? null
 , withRADOS ? false
 , withRemote ? true
 , withSandbox ? false
 , withTOC ? true
 }:
 
-with pkgs;
+assert withPmem -> pmdk != null;
+
 stdenv.mkDerivation rec {
   pname = "fdb";
   version = "5.11.7";
 
-  src = fetchFromGitHub {
+  src = lib.makeOverridable fetchFromGitHub {
     owner = "ecmwf";
     repo = "fdb";
     rev = version;
@@ -64,7 +76,7 @@ stdenv.mkDerivation rec {
 
   preCheck = ''
     mkdir -p tests
-    cp -R ${pkgs.fdb-test-data}/share/* tests/
+    cp -R ${fdb-test-data}/share/* tests/
   '';
 
   meta = with lib; {
