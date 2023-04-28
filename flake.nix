@@ -8,6 +8,23 @@
     {
       overlays.default =
         final: prev: {
+          atlas = prev.callPackage ./atlas {
+            inherit (final)
+              lib stdenv fetchFromGitHub
+              bash
+              boost
+              cgal_5
+              ecbuild
+              eckit
+              eigen
+              fckit
+              fftw
+              gfortran
+              git
+              gmp
+              mpfr
+              perl;
+          };
           ecbuild = prev.callPackage ./ecbuild {
             inherit (prev)
               lib stdenv fetchFromGitHub
@@ -185,7 +202,7 @@
         in
         {
           packages = {
-            inherit (pkgs) ecbuild eccodes eckit fckit fdb magics metkit odc;
+            inherit (pkgs) atlas ecbuild eccodes eckit fckit fdb magics metkit odc;
           };
         }));
 }
