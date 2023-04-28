@@ -79,6 +79,19 @@
               python3Full
               ;
           };
+          ecmwf-mir = prev.callPackage ./mir {
+            inherit (final)
+              lib stdenv fetchFromGitHub
+              atlas
+              bash
+              ecbuild
+              eccodes
+              eckit
+              git
+              libpng
+              netcdf
+              perl;
+          };
           fdb = prev.callPackage ./fdb {
             inherit (final)
               lib stdenv fetchFromGitHub
@@ -203,7 +216,17 @@
         in
         {
           packages = {
-            inherit (pkgs) atlas ecbuild eccodes eckit fckit fdb magics metkit odc;
+            inherit (pkgs)
+              atlas
+              ecbuild
+              eccodes
+              eckit
+              fckit
+              ecmwf-mir
+              fdb
+              magics
+              metkit
+              odc;
           };
         }));
 }
