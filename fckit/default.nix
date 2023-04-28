@@ -47,6 +47,7 @@ rec {
 
   propagatedBuildInputs = [
     eckit
+    python3Full
   ];
 
   FC = "${gfortran}/bin/g77";
