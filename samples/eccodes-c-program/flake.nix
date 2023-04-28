@@ -7,8 +7,8 @@
   # Declare the ECMWF software Nix flake as an input.
   inputs.ecmwf.url = "github:carletes/ecmwf-nixpkgs";
 
-  # Ensure we use the same versions of our inputs as those of the ECMWF
-  # software Nix flake.
+  # Ensure the ECMWF software Nix flake uses the same versions of the inputs
+  # that it shares with us.
   inputs.ecmwf.inputs.nixpkgs.follows = "nixpkgs";
   inputs.ecmwf.inputs.flake-utils.follows = "flake-utils";
 
@@ -38,5 +38,4 @@
       )
     );
 }
-
 
