@@ -49,6 +49,18 @@
             inherit (final)
               stdenv fetchurl;
           };
+          fckit = prev.callPackage ./fckit {
+            inherit (final)
+              lib stdenv fetchFromGitHub
+              bash
+              ecbuild
+              eckit
+              gfortran
+              git
+              perl
+              python3Full
+              ;
+          };
           fdb = prev.callPackage ./fdb {
             inherit (final)
               lib stdenv fetchFromGitHub
@@ -133,7 +145,7 @@
         in
         {
           packages = {
-            inherit (pkgs) ecbuild eccodes eckit fdb magics metkit odc;
+            inherit (pkgs) ecbuild eccodes eckit fckit fdb magics metkit odc;
           };
         }));
 }
