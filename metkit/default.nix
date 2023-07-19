@@ -24,13 +24,13 @@ assert withODB -> odc != null;
 
 stdenv.mkDerivation rec {
   pname = "metkit";
-  version = "1.10.11";
+  version = "1.10.13";
 
   src = lib.makeOverridable fetchFromGitHub {
     owner = "ecmwf";
     repo = "metkit";
     rev = version;
-    sha256 = "sha256-lJLcu6IPSHPBe78axT3RQupJWeiJ84CBRYtyecBJ2JE=";
+    sha256 = "sha256-pzDhgdT2ISnEKu9RblO5/qvpqeWPEihaWC7N0bnzRK0=";
   };
 
   nativeBuildInputs = [
