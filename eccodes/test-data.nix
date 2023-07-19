@@ -4,16 +4,28 @@
 
 stdenv.mkDerivation {
   pname = "eccodes-test-data";
-  version = "2022-12-09-001";
+  version = "2024-07-16-001";
 
   srcs = [
     (fetchurl {
-      url = "https://get.ecmwf.int/repository/test-data/grib_api/eccodes_test_data.tar.gz";
-      sha256 = "sha256-cac35Y+4J5327NsbqscqhkPKeE4ts9EUQY5VTIbw2Zc=";
+      url = "https://get.ecmwf.int/repository/test-data/eccodes/eccodes_test_data.tar.gz";
+      sha256 = "sha256-Q2lums2Yy9YBFMHalkzyWPGhV2cSaHQ9WCsmwfHKm/s=";
     })
     (fetchurl {
-      url = "https://get.ecmwf.int/repository/test-data/grib_api/data/ccsds_szip.grib2";
+      url = "https://get.ecmwf.int/repository/test-data/eccodes/data/ccsds_szip.grib2";
       sha256 = "sha256-rQPHm8luMSq60qOWcw0Iq5FYpO/jKkVI/mwHsjVzobU=";
+    })
+    (fetchurl {
+      url = "https://get.ecmwf.int/repository/test-data/eccodes/data/boustrophedonic.grib1";
+      sha256 = "sha256-GBHq9eludE5Nec6YxGAtb2eqIZlP51WBmivKkllfSo8=";
+    })
+    (fetchurl {
+      url = "https://get.ecmwf.int/repository/test-data/eccodes/data/reduced_gaussian_sub_area.legacy.grib1";
+      sha256 = "sha256-2WVSSthUWLSYl5nqi4piBJGmprSlgMEuU7PSJRjRboA=";
+    })
+    (fetchurl {
+      url = "https://get.ecmwf.int/repository/test-data/eccodes/data/run_length_packing.grib2";
+      sha256 = "sha256-ycKYHuR5v3idoAwMah+GiSKNW0EBPnrmBvKOklFKUv0=";
     })
   ];
 

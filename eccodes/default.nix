@@ -20,7 +20,6 @@
 , withPNG ? true
 , libpng
 , withThreads ? true
-, time
 }:
 
 assert withAEC -> libaec != null;
@@ -41,13 +40,13 @@ in
 stdenv.mkDerivation
 rec {
   pname = "eccodes";
-  version = "2.30.0";
+  version = "2.36.0";
 
   src = lib.makeOverridable fetchFromGitHub {
     owner = "ecmwf";
     repo = "eccodes";
     rev = version;
-    sha256 = "sha256-PjFGViGFqyxNdLAEeIulUo0s//2988wKTOjSqzgNRmo=";
+    sha256 = "sha256-Y0nsVCi25wWzRhLc9c0GZ7veJ/0kSvjgcs/R41W3CeM=";
   };
 
   postPatch = lib.optionalString withJPG ''
