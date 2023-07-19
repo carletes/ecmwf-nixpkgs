@@ -41,13 +41,13 @@ in
 stdenv.mkDerivation
 rec {
   pname = "eccodes";
-  version = "2.30.0";
+  version = "2.31.0";
 
   src = lib.makeOverridable fetchFromGitHub {
     owner = "ecmwf";
     repo = "eccodes";
     rev = version;
-    sha256 = "sha256-PjFGViGFqyxNdLAEeIulUo0s//2988wKTOjSqzgNRmo=";
+    sha256 = "sha256-7zRUelwZ1RTUBqaOB8Vmdog7f+9xlbgv/tjrrJoIGXs=";
   };
 
   postPatch = lib.optionalString withJPG ''
