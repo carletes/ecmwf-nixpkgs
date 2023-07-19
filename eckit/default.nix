@@ -63,13 +63,13 @@ assert withXxHash -> xxHash != null;
 
 stdenv.mkDerivation rec {
   pname = "eckit";
-  version = "1.23.0";
+  version = "1.24.3";
 
   src = lib.makeOverridable fetchFromGitHub {
     owner = "ecmwf";
     repo = "eckit";
     rev = version;
-    sha256 = "sha256-A0JHLVnydrRar33XBrVSauZx7UX+L0tiQ2FuC9uflOM=";
+    sha256 = "sha256-0hle7e5xLUUQS3u8B/Tv6MEbT/TztE70+GYflZ2KTWo=";
   };
 
   patches = [
