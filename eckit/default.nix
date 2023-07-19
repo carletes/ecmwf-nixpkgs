@@ -9,6 +9,7 @@
 , git
 , ncurses
 , perl
+, python3
 , pkg-config
 , withAEC ? true
 , libaec
@@ -63,17 +64,18 @@ assert withXxHash -> xxHash != null;
 
 stdenv.mkDerivation rec {
   pname = "eckit";
-  version = "1.23.0";
+  version = "1.26.3";
 
   src = lib.makeOverridable fetchFromGitHub {
     owner = "ecmwf";
     repo = "eckit";
     rev = version;
-    sha256 = "sha256-A0JHLVnydrRar33XBrVSauZx7UX+L0tiQ2FuC9uflOM=";
+    sha256 = "sha256-6T0ZhXE5ml1ahIVcETS5RK/PDX9I8l5aG6TkgvsPlm8=";
   };
 
   patches = [
     ./patches/001-disable-urlhandle-test.patch
+    ./patches/002-fix-test-easycurl.patch
   ];
 
   postPatch = ''
@@ -82,6 +84,8 @@ stdenv.mkDerivation rec {
     substituteInPlace regressions/ECKIT-175.sh.in \
       --replace '#!/usr/bin/env bash' '#!${bash}/bin/bash'
     substituteInPlace regressions/ECKIT-221.sh.in \
+      --replace '#!/usr/bin/env bash' '#!${bash}/bin/bash'
+    substituteInPlace tests/io/mock/MockREST.launcher.sh \
       --replace '#!/usr/bin/env bash' '#!${bash}/bin/bash'
   '';
 
@@ -92,6 +96,7 @@ stdenv.mkDerivation rec {
     git
     perl
     pkg-config
+    (python3.withPackages (ps: [ ps.flask ]))
   ];
 
   propagatedBuildInputs = [

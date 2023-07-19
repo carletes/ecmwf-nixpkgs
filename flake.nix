@@ -60,6 +60,7 @@
               openssl
               perl
               pkg-config
+              python3
               snappy
               xxHash;
           };
