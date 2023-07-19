@@ -46,7 +46,6 @@
                 python3 -m Magics selfcheck
               '';
             };
-
         }
       )
     );
