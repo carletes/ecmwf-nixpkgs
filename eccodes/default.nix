@@ -5,6 +5,7 @@
 , eccodes-test-data
 , git
 , perl
+, time
 , withAEC ? true
 , libaec
 , withBUFR ? true
@@ -75,6 +76,7 @@ rec {
   cmakeFlags = [
     "-DENABLE_AEC=${if withAEC then "ON" else "OFF"}"
     "-DENABLE_BUILD_TOOLS=${if withBuildTools then "ON" else "OFF"}"
+    "-DENABLE_ECCODES_THREADS=ON"
     "-DENABLE_EXAMPLES=${if withExamples then "ON" else "OFF"}"
     "-DENABLE_ECCODES_THREADS=${if withThreads then "ON" else "OFF"}"
     "-DENABLE_EXTRA_TESTS=ON"
