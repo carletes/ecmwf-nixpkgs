@@ -24,13 +24,13 @@ assert withODB -> odc != null;
 
 stdenv.mkDerivation rec {
   pname = "metkit";
-  version = "1.10.11";
+  version = "1.11.14";
 
   src = lib.makeOverridable fetchFromGitHub {
     owner = "ecmwf";
     repo = "metkit";
     rev = version;
-    sha256 = "sha256-lJLcu6IPSHPBe78axT3RQupJWeiJ84CBRYtyecBJ2JE=";
+    sha256 = "sha256-zPnjmws0gZ1B8rgvn5FDmz8/Lel4yCqgx9rr+C3ysEE=";
   };
 
   nativeBuildInputs = [
@@ -48,6 +48,11 @@ stdenv.mkDerivation rec {
   ;
 
   postPatch = ''
+    for t in compare legacy obs simple ; do
+      substituteInPlace tests/marsgen/metkit_marsgen_$t.sh.in \
+        --replace '#!/bin/bash' '#!${bash}/bin/bash'
+    done
+
     for r in 89 103 ; do
       substituteInPlace tests/regressions/METK-$r/METK-$r.sh.in \
         --replace '#!/usr/bin/env bash' '#!${bash}/bin/bash'
