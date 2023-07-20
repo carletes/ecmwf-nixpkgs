@@ -136,6 +136,30 @@
             inherit (final)
               stdenv fetchurl;
           };
+
+          pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+            (
+              python-final: python-prev: {
+                eccodes = prev.callPackage ./eccodes-python {
+                  inherit (final)
+                    lib stdenv
+                    substituteAll
+                    eccodes
+                    ;
+                  # inherit (final.python3.pkgs)
+                  inherit (python-final)
+                    buildPythonPackage
+                    fetchPypi
+                    pythonOlder
+                    attrs
+                    cffi
+                    numpy
+                    pytestCheckHook
+                    ;
+                };
+              }
+            )
+          ];
         }
       ;
     } // (

@@ -1,0 +1,35 @@
+Do not rely on `findlibs` to locate the eccodes shared library.
+
+We know where it is.
+
+--- a/gribapi/bindings.py
++++ b/gribapi/bindings.py
+@@ -25,14 +25,7 @@ __version__ = "1.6.0"
+ 
+ LOG = logging.getLogger(__name__)
+ 
+-try:
+-    import ecmwflibs as findlibs
+-except ImportError:
+-    import findlibs
+-
+-library_path = findlibs.find("eccodes")
+-if library_path is None:
+-    raise RuntimeError("Cannot find the ecCodes library")
++library_path = "@libeccodes@"
+ 
+ # default encoding for ecCodes strings
+ ENC = "ascii"
+
+
+--- a/setup.py
++++ b/setup.py
+@@ -44,7 +44,7 @@ elif sys.version_info < (3, 8):
+ elif sys.version_info < (3, 9):
+     install_requires = ["numpy<1.25"]
+ 
+-install_requires += ["attrs", "cffi", "findlibs"]
++install_requires += ["attrs", "cffi"]
+ 
+ setuptools.setup(
+     name="eccodes",

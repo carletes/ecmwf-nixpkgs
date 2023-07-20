@@ -28,50 +28,21 @@
         in
         {
           devShells.default =
-            let
-              libraryPath = with pkgs; lib.makeLibraryPath [
-                # Numpy needs to load the zlib shared library.
-                zlib
-
-                # Package `eccodes-python` needs to load the eccodes share library.
-                eccodes
-              ];
-            in
             pkgs.mkShell {
               buildInputs = with pkgs; [
-                # Install `eccodes` (this comes from the ECMWF software Nix flake).
-                eccodes
-
-                # We'll also install Python ...
-                python3Full
-
-                # ... and `zlib`, because Numpy (installed via `python3 -m pip eccodes-python`)
-                # needs this
-                zlib
+                # Install the eccodes Python bindings
+                (python3.withPackages
+                  (ps: with ps; [
+                    eccodes
+                  ]))
               ];
 
               shellHook = ''
-                # If you plan on creating a Python virtualenv to install Python
-                # packages from PyPI, it is helpful to create it here, and
-                # activate it here too.
-                python3 -m venv .venv
-                source .venv/bin/activate
-
-                # At this point you should be able to install `eccodes-python`
-                # yourself --- which is what we do here for ilustration purposes:
-                # What follows is _not_ needed in the shell environment!
-                python3 -m pip install eccodes-python
-
-                # We need to set the `LD_LIBRARY_PATH` (Linux) or the
-                # `DYLD_LIBRARY_PATH` (Mac) env variable, so that our Python
-                # dependencies are able to load the shared objects they need.
-                export LD_LIBRARY_PATH="${libraryPath}"
-                export DYLD_LIBRARY_PATH="${libraryPath}"
-
-                # Ensure the package has been installed correctly.
+                # Ensure the bindings have been installed correctly.
                 python3 -m eccodes selfcheck
               '';
             };
+
         }
       )
     );
