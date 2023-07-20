@@ -16,7 +16,7 @@
           eccodes = prev.callPackage ./eccodes {
             inherit (final)
               lib stdenv fetchFromGitHub
-              ecbuild eccodes-test-data gfortran git libaec libpng netcdf openjpeg perl;
+              ecbuild eccodes-test-data gfortran git libaec libpng netcdf openjpeg perl time;
           };
           eccodes-test-data = prev.callPackage ./eccodes/test-data.nix {
             inherit (final)

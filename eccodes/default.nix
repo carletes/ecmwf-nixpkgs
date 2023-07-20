@@ -19,6 +19,8 @@
 , netcdf
 , withPNG ? true
 , libpng
+, withThreads ? true
+, time
 }:
 
 assert withAEC -> libaec != null;
@@ -60,7 +62,9 @@ rec {
     ecbuild
     git
     perl
-  ] ++ lib.optional fortranEnabled gfortran;
+  ]
+  ++ lib.optional fortranEnabled gfortran
+  ++ lib.optional withThreads time;
 
   propagatedBuildInputs = [ ]
     ++ lib.optional withAEC libaec
@@ -73,6 +77,7 @@ rec {
     "-DENABLE_AEC=${if withAEC then "ON" else "OFF"}"
     "-DENABLE_BUILD_TOOLS=${if withBuildTools then "ON" else "OFF"}"
     "-DENABLE_EXAMPLES=${if withExamples then "ON" else "OFF"}"
+    "-DENABLE_ECCODES_THREADS=${if withThreads then "ON" else "OFF"}"
     "-DENABLE_EXTRA_TESTS=ON"
     "-DENABLE_FORTRAN=${if fortranEnabled then "ON" else "OFF"}"
     "-DENABLE_JPG=${if withJPG then "ON" else "OFF"}"
