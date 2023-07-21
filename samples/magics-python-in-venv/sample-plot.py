@@ -9,7 +9,8 @@ from Magics import macro as magics
 fd, grib = tempfile.mkstemp()
 try:
     with requests.get(
-        "http://download.ecmwf.int/test-data/magics/2m_temperature.grib", stream=True
+        "https://get.ecmwf.int/repository/test-data/opencharts-data/medium-2t-dp.grib",
+        stream=True,
     ) as r:
         r.raise_for_status()
         for chunk in r.iter_content():
