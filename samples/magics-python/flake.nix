@@ -20,47 +20,33 @@
             inherit system;
 
             # Installe the Nix package overlay defined in the ECMWF software
-            # Nix flake, so that you may install all packages defined there ...
+            # Nix flake, so that you may install all packages defined there.
             overlays = [
               ecmwf.overlays.default
             ];
           };
         in
         {
-          devShells.default = pkgs.mkShell {
-            buildInputs = with pkgs; [
-              # ... like `magics`, for instance.
-              magics
+          devShells.default =
+            pkgs.mkShell {
+              buildInputs = with pkgs; [
+                (python3.withPackages
+                  (ps: with ps; [
+                    # Install the Magics Python bindings
+                    Magics
 
-              # We'll also install Python.
-              python3Full
-            ];
+                    # Also install `requests`, needed by the sample Python
+                    # script in this directory.
+                    requests
+                  ]))
+              ];
 
-            # We need to set the `LD_LIBRARY_PATH` env variable, so that our
-            # Python dependencies are able to load the shared objects they need.
-            LD_LIBRARY_PATH = with pkgs; lib.makeLibraryPath [
-              # Magics shared library is loaded by the `findlibs` Python package,
-              # which does not know how to load it under Nix.
-              magics
-            ];
+              shellHook = ''
+                # Ensure the bindings have been installed correctly.
+                python3 -m Magics selfcheck
+              '';
+            };
 
-            shellHook = ''
-              # If you plan on creating a Python virtualenv to install Python
-              # packages from PyPI, it is helpful to create it here, and
-              # activate it here too.
-              python3 -m venv .venv
-              source .venv/bin/activate
-
-              # At this point you should be able to install `Magics` yourself,
-              # and any other package you might need --- which is what we do
-              # here for ilustration purposes: What follows is _not_ needed in
-              # the shell environment!
-              python3 -m pip install Magics requests
-
-              # Ensure the package has been installed correctly.
-              python3 -m Magics selfcheck
-            '';
-          };
         }
       )
     );

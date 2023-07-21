@@ -7,6 +7,6 @@ to run the sample Pythin script `sample-plot.py`, which generates a Magics plot:
 ```
 $ python3 sample-plot.py
 $ ls -l magics.png 
--rw-r--r-- 1 carlos users 231003 Jul 21 13:39 magics.png
+-rw-r--r-- 1 carlos users 205818 Dec 31 17:56 magics.png
 $
 ```

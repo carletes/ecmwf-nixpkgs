@@ -1,0 +1,35 @@
+Do not rely on `findlibs` to locate the Magics shared library.
+
+We know where it is.
+
+--- a/Magics/Magics.py
++++ b/Magics/Magics.py
+@@ -15,14 +15,7 @@ import sys
+ import numpy as np
+ from numpy.ctypeslib import ndpointer
+ 
+-try:
+-    import ecmwflibs as findlibs
+-except ImportError:
+-    import findlibs
+-
+-lib = findlibs.find("MagPlus")
+-if lib is None:
+-    raise RuntimeError("Cannot find MagPlus library")
++lib = "@libmagplus@"
+ 
+ 
+ dll = ctypes.CDLL(lib)
+
+
+--- a/setup.py
++++ b/setup.py
+@@ -37,8 +37,6 @@ install_requires = ["numpy"]
+ if sys.version_info < (3, 7):
+     install_requires = ["numpy<1.20"]
+ 
+-install_requires += ["findlibs"]
+-
+ setuptools.setup(
+     name="Magics",
+     version=version,

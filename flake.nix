@@ -140,6 +140,22 @@
           pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
             (
               python-final: python-prev: {
+                Magics = prev.callPackage ./magics-python
+                  {
+                    inherit (final)
+                      lib stdenv
+                      substituteAll
+                      magics
+                      qt5
+                      ;
+                    # inherit (final.python3.pkgs)
+                    inherit (python-final)
+                      buildPythonPackage
+                      fetchPypi
+                      pythonOlder
+                      numpy
+                      ;
+                  };
                 eccodes = prev.callPackage ./eccodes-python {
                   inherit (final)
                     lib stdenv
