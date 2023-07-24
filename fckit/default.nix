@@ -8,20 +8,9 @@
 , git
 , perl
 , python3Full
-, withFortran ? true
 , gfortran
 }:
 
-let
-  # I cannot get the Fortran bindings to build on Darwin. The build error looks like:
-  #
-  # -- Performing Test eccodes_Fortran_FLAG_TEST_1 - Failed
-  # CMake Error at /nix/store/9wd2cbjd7qi81arqiq2246f5890ylvcb-ecbuild-3.7.0/share/ecbuild/cmake/ecbuild_log.cmake:190 (message):
-  #   CRITICAL - Fortran compiler
-  #   /nix/store/p4npag17lbpskv5qli4ph0p7409nzk1x-gfortran-wrapper-11.3.0/bin/gfortran
-  #   does not recognise Fortran flag '-fallow-argument-mismatch'
-  fortranEnabled = withFortran && (! stdenv.isDarwin);
-in
 stdenv.mkDerivation
 rec {
   pname = "fckit";
@@ -51,13 +40,16 @@ rec {
     bash
     ecbuild
     git
+    gfortran
     perl
     python3Full
-  ] ++ lib.optional fortranEnabled gfortran;
+  ];
 
   propagatedBuildInputs = [
     eckit
   ];
+
+  FC = "${gfortran}/bin/g77";
 
   cmakeFlags = [
     "-DENABLE_ECKIT=ON"
