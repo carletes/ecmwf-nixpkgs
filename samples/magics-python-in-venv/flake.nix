@@ -32,6 +32,9 @@
               # ... like `magics`, for instance.
               magics
 
+              # See below.
+              stdenv.cc.cc.lib
+
               # We'll also install Python.
               python3Full
             ];
@@ -42,6 +45,9 @@
               # Magics shared library is loaded by the `findlibs` Python package,
               # which does not know how to load it under Nix.
               magics
+
+              # Numpy depends on `libstc++`.
+              stdenv.cc.cc.lib
             ];
 
             shellHook = ''
