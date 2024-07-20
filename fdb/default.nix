@@ -24,13 +24,13 @@ assert withPmem -> pmdk != null;
 
 stdenv.mkDerivation rec {
   pname = "fdb";
-  version = "5.11.7";
+  version = "5.12.1";
 
   src = lib.makeOverridable fetchFromGitHub {
     owner = "ecmwf";
     repo = "fdb";
     rev = version;
-    sha256 = "sha256-zPfDcJG3o2GEOhS4xrMVWVTZ+OIjpAsTQMe20kDVPdY=";
+    sha256 = "sha256-aLyFM83RePvZ9OOkYIdAdTJ2iaODcDosN33F0to4yKk=";
   };
 
   nativeBuildInputs = [
@@ -59,13 +59,15 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    for r in 238 239 240 241 243 245 251 260 264 266 267 268 271 275 276 282 291 292 ; do
+    for r in 238 239 240 241 243 245 251 260 264 266 267 268 271 275 276 282 291 292 307 310 ; do
       substituteInPlace tests/regressions/FDB-$r/FDB-$r.sh.in \
         --replace '#!/usr/bin/env bash' '#!${bash}/bin/bash'
     done
 
-    substituteInPlace tests/fdb/tools/fdb_info.sh.in \
-      --replace '#!/usr/bin/env bash' '#!${bash}/bin/bash'
+    for t in axes info ; do
+      substituteInPlace tests/fdb/tools/fdb_$t.sh.in \
+        --replace '#!/usr/bin/env bash' '#!${bash}/bin/bash'
+    done
   '';
 
   doCheck = true;
