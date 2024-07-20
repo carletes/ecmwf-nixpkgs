@@ -43,13 +43,13 @@ assert withODB -> odc != null;
 
 stdenv.mkDerivation rec {
   pname = "magics";
-  version = "4.13.0";
+  version = "4.15.4";
 
   src = lib.makeOverridable fetchFromGitHub {
     owner = "ecmwf";
     repo = "magics";
     rev = version;
-    sha256 = "sha256-pvq9M9i4vsDxj0oc20nSlWyuto3xXr8yLaak+kUtJ4g=";
+    sha256 = "sha256-Go0rySTCm9xjlkYY4Vz2MxbnBBPDne8y/Wpnnxmw3i4=";
   };
 
   patches = [
