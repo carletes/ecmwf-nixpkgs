@@ -15,13 +15,13 @@ assert withFortran -> gfortran != null;
 
 stdenv.mkDerivation rec {
   pname = "odc";
-  version = "1.4.6";
+  version = "1.5.2";
 
   src = lib.makeOverridable fetchFromGitHub {
     owner = "ecmwf";
     repo = "odc";
     rev = version;
-    sha256 = "sha256-Qrw+AwRG8HgCzywTEkX6c12+vmlGHm9avrs0Wn8qbDg=";
+    sha256 = "sha256-eBzpnrK0OXD1WWrG/+4jvLFAxPn5Jhot7Rfku6iZB4w=";
   };
 
   nativeBuildInputs = [
