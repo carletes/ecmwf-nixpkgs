@@ -9,7 +9,7 @@ stdenv.mkDerivation {
   srcs = [
     (fetchurl {
       url = "https://get.ecmwf.int/repository/test-data/eccodes/eccodes_test_data.tar.gz";
-      sha256 = "sha256-Q2lums2Yy9YBFMHalkzyWPGhV2cSaHQ9WCsmwfHKm/s=";
+      sha256 = "sha256-rSFBgWyccZryOusCzkYU9525dukInzO2Z0o5BpRpLi4=";
     })
     (fetchurl {
       url = "https://get.ecmwf.int/repository/test-data/eccodes/data/ccsds_szip.grib2";

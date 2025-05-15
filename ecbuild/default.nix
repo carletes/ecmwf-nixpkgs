@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     owner = "ecmwf";
     repo = "ecbuild";
     rev = version;
-    sha256 = "sha256-P2DmlEfejhDrj3ZAJWCVnJF/VcNE9J2hg3sr34gouzs=";
+    sha256 = "sha256-QjQPf+7XLr/vX+01ZLFx5WNwh2C0MxhKz7Gt4auPUz0=";
   };
 
   patches = [
